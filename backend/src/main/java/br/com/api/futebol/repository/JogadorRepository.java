@@ -42,8 +42,8 @@ public class JogadorRepository {
 	}
 
 	public int save(Jogador jogador) {
-		String sql = "INSERT INTO jogador (nome, time) VALUES (?, ?)";
-		return jdbcTemplate.update(sql, jogador.getNome(), jogador.getTime());
+		String sql = "INSERT INTO jogador (nome, time, idade, posicao) VALUES (?, ?, ?, ?)";
+		return jdbcTemplate.update(sql, jogador.getNome(), jogador.getTime(), jogador.getIdade(), jogador.getPosicao());
 	}
 
 	public int update(Jogador jogador) {
@@ -52,7 +52,7 @@ public class JogadorRepository {
 	}
 
 	public int deleteById(Long id) {
-		String sql = "DELETE FROM jogadores WHERE id = ?";
+		String sql = "DELETE FROM jogador WHERE id = ?";
 		return jdbcTemplate.update(sql, id);
 	}
 
