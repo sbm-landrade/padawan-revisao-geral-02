@@ -1,0 +1,37 @@
+package br.com.api.futebol.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.api.futebol.model.Jogador;
+import br.com.api.futebol.repository.JogadorRepository;
+
+@Service
+public class JogadorService {
+	
+	@Autowired
+    private JogadorRepository jogadorRepository;
+
+    public List<Jogador> findAll() {
+        return jogadorRepository.findAll();
+    }
+
+    public Jogador findById(Long id) {
+        return jogadorRepository.findById(id);
+    }
+
+    public int save(Jogador jogador) {
+        return jogadorRepository.save(jogador);
+    }
+
+    public int update(Jogador jogador) {
+        return jogadorRepository.update(jogador);
+    }
+
+    public int deleteById(Long id) {
+        return jogadorRepository.deleteById(id);
+    }
+
+}
