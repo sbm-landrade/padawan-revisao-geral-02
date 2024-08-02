@@ -25,6 +25,8 @@ public class JogadorRepository {
 			jogador.setId(rs.getLong("id"));
 			jogador.setNome(rs.getString("nome"));
 			jogador.setTime(rs.getString("time"));
+			jogador.setIdade(rs.getInt("idade"));
+			jogador.setPosicao(rs.getString("posicao"));
 			return jogador;
 		}
 	}
@@ -52,5 +54,15 @@ public class JogadorRepository {
 	public int deleteById(Long id) {
 		String sql = "DELETE FROM jogadores WHERE id = ?";
 		return jdbcTemplate.update(sql, id);
+	}
+
+	public List<Jogador> findByPosicao(String posicao) {
+		String sql = "SELECT * FROM jogador WHERE posicao = ?";
+		return jdbcTemplate.query(sql, new JogadorRowMapper(), posicao);
+	}
+
+	public List<Jogador> findByIdade(int idade) {
+		String sql = "SELECT * FROM jogador WHERE idade = ?";
+		return jdbcTemplate.query(sql, new JogadorRowMapper(), idade);
 	}
 }
