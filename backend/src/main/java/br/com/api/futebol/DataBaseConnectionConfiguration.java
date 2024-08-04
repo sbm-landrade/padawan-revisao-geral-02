@@ -19,13 +19,16 @@ public class DataBaseConnectionConfiguration {
 	public DataSource dataSource() {
 		return DataSourceBuilder.create().build();
 	}
+	
+	 @Bean
+	    public Connection connection(DataSource dataSource) throws SQLException {
+	        return dataSource.getConnection();
+	    }
 
 	public static void main(String[] args) throws SQLException {
 
 		Connection connection = DriverManager.getConnection(
 				"jdbc:mysql://localhost/futebol?useTimezone=true&serverTimezone=UTC", "root", "root");
-
-		System.out.println("Fechando conexão!!");
 
 		connection.close();
 	}

@@ -10,28 +10,40 @@ import br.com.api.futebol.repository.JogadorRepository;
 
 @Service
 public class JogadorService {
-	
+
 	@Autowired
-    private JogadorRepository jogadorRepository;
+	private JogadorRepository jogadorRepository;
 
-    public List<Jogador> findAll() {
-        return jogadorRepository.findAll();
+	public JogadorService(JogadorRepository jogadorRepository) {
+		this.jogadorRepository = jogadorRepository;
+	}
+
+	public List<Jogador> findAll() {
+		return jogadorRepository.findAll();
+	}
+
+	public Jogador findById(Long id) {
+		return jogadorRepository.findById(id);
+	}
+
+	public int save(Jogador jogador) {
+		return jogadorRepository.save(jogador);
+	}
+
+	public int update(Jogador jogador) {
+		return jogadorRepository.update(jogador);
+	}
+
+	public int deleteById(Long id) {
+		return jogadorRepository.deleteById(id);
+	}
+	
+    public List<Jogador> findByPosicao(String posicao) {
+        return jogadorRepository.findByPosicao(posicao);
     }
 
-    public Jogador findById(Long id) {
-        return jogadorRepository.findById(id);
-    }
-
-    public int save(Jogador jogador) {
-        return jogadorRepository.save(jogador);
-    }
-
-    public int update(Jogador jogador) {
-        return jogadorRepository.update(jogador);
-    }
-
-    public int deleteById(Long id) {
-        return jogadorRepository.deleteById(id);
+    public List<Jogador> findByIdade(int idade) {
+        return jogadorRepository.findByIdade(idade);
     }
 
 }
