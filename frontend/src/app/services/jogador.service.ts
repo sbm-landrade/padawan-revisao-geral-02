@@ -1,7 +1,7 @@
 //Serviço responsável por fazer chamadas HTTP para a API backend.
 //Contém métodos para realizar operações CRUD (Create, Read, Update, Delete).
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Jogador } from '../models/jogador';
 
@@ -17,6 +17,7 @@ export class JogadorService {
   getAllJogadores(): Observable<Jogador[]> {
     return this.http.get<Jogador[]>(this.apiUrl);
   }
+
   getJogadorById(id: number): Observable<Jogador> {
     return this.http.get<Jogador>(`${this.apiUrl}/${id}`);
   }
@@ -31,6 +32,15 @@ export class JogadorService {
 
   deleteJogador(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getJogadoresByFields(nome?: string, time?: string, idade?: number, posicao?: string): Observable<Jogador[]> {
+    let params = new HttpParams();
+    if (nome) params = params.set('nome', nome);
+    if (time) params = params.set('time', time);
+    if (idade) params = params.set('idade', idade.toString());
+    if (posicao) params = params.set('posicao', posicao);
+    return this.http.get<Jogador[]>(`${this.apiUrl}/search`, { params });
   }
 
 }

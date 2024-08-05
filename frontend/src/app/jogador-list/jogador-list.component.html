@@ -1,10 +1,25 @@
-<div *ngIf="jogadores && jogadores.length">
-  <ul>
-    <li *ngFor="let jogador of jogadores">
-      {{ jogador.nome }} - {{ jogador.time }} - {{ jogador.idade }} anos - {{ jogador.posicao }}
-    </li>
-  </ul>
-</div>
-<div *ngIf="!jogadores || jogadores.length === 0">
-  Nenhum jogador encontrado.
+<div class="container">
+  <h2>Filtrar Jogadores</h2>
+  <form (ngSubmit)="searchJogadores()">
+    <input type="text" placeholder="Nome" [(ngModel)]="nome" name="nome">
+    <input type="text" placeholder="Time" [(ngModel)]="time" name="time">
+    <input type="number" placeholder="Idade" [(ngModel)]="idade" name="idade">
+    <input type="text" placeholder="Posição" [(ngModel)]="posicao" name="posicao">
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div *ngIf="jogadores && jogadores.length">
+    <ul>
+      <li *ngFor="let jogador of jogadores">
+        <span>{{ jogador.nome }} - {{ jogador.time }} - {{ jogador.idade }} anos - {{ jogador.posicao }}</span>
+        <div>
+          <button class="edit" (click)="editJogador(jogador)">Editar</button>
+          <button class="delete" (click)="deleteJogador(jogador.id)">Excluir</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="!jogadores || jogadores.length === 0" class="no-jogadores">
+    Nenhum jogador encontrado.
+  </div>
 </div>
