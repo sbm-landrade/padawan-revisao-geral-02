@@ -16,12 +16,12 @@ import br.com.api.futebol.model.Jogador;
 public class JogadorRepository {
 
     private final Connection connection;
-
+//criar conexão
     @Autowired
     public JogadorRepository(Connection connection) {
         this.connection = connection;
     }
-
+//findall= mapeia Todos Jogadores
     public List<Jogador> findAll() {
         String sql = "SELECT * FROM jogador";
         List<Jogador> jogadores = new ArrayList<>();
@@ -43,7 +43,7 @@ public class JogadorRepository {
         }
         return jogadores;
     }
-
+//FindById seleciona jogadores por ID
     public Jogador findById(Long id) {
         String sql = "SELECT * FROM jogador WHERE id = ?";
         Jogador jogador = null;
@@ -65,7 +65,7 @@ public class JogadorRepository {
         }
         return jogador;
     }
-
+//Insere um novo registro na tabela
     public int save(Jogador jogador) {
         String sql = "INSERT INTO jogador (nome, time, idade, posicao) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
@@ -78,7 +78,7 @@ public class JogadorRepository {
             throw new RuntimeException(e);
         }
     }
-
+//atualiza um registro existente
     public int update(Jogador jogador) {
         String sql = "UPDATE jogador SET nome = ?, time = ? WHERE id = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
@@ -90,7 +90,7 @@ public class JogadorRepository {
             throw new RuntimeException(e);
         }
     }
-
+//Exclui um registro da tabela com base no id
     public int deleteById(Long id) {
         String sql = "DELETE FROM jogador WHERE id = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
@@ -100,7 +100,7 @@ public class JogadorRepository {
             throw new RuntimeException(e);
         }
     }
-
+//consulta a posicao
     public List<Jogador> findByPosicao(String posicao) {
         String sql = "SELECT * FROM jogador WHERE posicao = ?";
         List<Jogador> jogadores = new ArrayList<>();
@@ -123,7 +123,7 @@ public class JogadorRepository {
         }
         return jogadores;
     }
-
+//Consulta a idade
     public List<Jogador> findByIdade(int idade) {
         String sql = "SELECT * FROM jogador WHERE idade = ?";
         List<Jogador> jogadores = new ArrayList<>();
