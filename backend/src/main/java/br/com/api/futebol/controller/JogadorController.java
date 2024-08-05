@@ -22,7 +22,6 @@ import br.com.api.futebol.service.JogadorService;
 public class JogadorController {
 	@Autowired
     private JogadorService jogadorService;
-	
 	@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
     public List<Jogador> getAllJogadores() {

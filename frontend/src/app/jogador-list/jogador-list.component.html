@@ -1,1 +1,10 @@
-<p>jogador-list works!</p>
+<div *ngIf="jogadores && jogadores.length">
+  <ul>
+    <li *ngFor="let jogador of jogadores">
+      {{ jogador.nome }} - {{ jogador.time }} - {{ jogador.idade }} anos - {{ jogador.posicao }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="!jogadores || jogadores.length === 0">
+  Nenhum jogador encontrado.
+</div>
