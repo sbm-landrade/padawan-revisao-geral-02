@@ -26,6 +26,10 @@ public class JogadorService {
 		return jogadorRepository.findById(id);
 	}
 
+	public List<Jogador> findByFields(String nome, String time, Integer idade, String posicao) {
+		return jogadorRepository.findByFields(nome, time, idade, posicao);
+	}
+
 	public int save(Jogador jogador) {
 		return jogadorRepository.save(jogador);
 	}
@@ -37,21 +41,21 @@ public class JogadorService {
 	public int deleteById(Long id) {
 		return jogadorRepository.deleteById(id);
 	}
-	
-    public List<Jogador> findByPosicao(String posicao) {
-        return jogadorRepository.findByPosicao(posicao);
-    }
 
-    public List<Jogador> findByIdade(int idade) {
-        return jogadorRepository.findByIdade(idade);
-    }
-    
-    public List<Jogador> findByNome(String nome) {
-        return jogadorRepository.findByNome(nome);
-    }
+	public List<Jogador> findByPosicao(String posicao) {
+		return jogadorRepository.findByPosicao(posicao);
+	}
 
-    public List<Jogador> findByTime(String time) {
-        return jogadorRepository.findByTime(time);
-    }
+	public List<Jogador> findByIdade(int idade) {
+		return jogadorRepository.findByIdade(idade);
+	}
+
+	public List<Jogador> findByNome(String nome) {
+		return jogadorRepository.findByNome(nome);
+	}
+
+	public List<Jogador> findByTime(String time) {
+		return jogadorRepository.findByTime(time);
+	}
 
 }

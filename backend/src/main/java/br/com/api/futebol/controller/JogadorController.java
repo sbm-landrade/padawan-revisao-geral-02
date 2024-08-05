@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.futebol.model.Jogador;
@@ -31,6 +32,15 @@ public class JogadorController {
     @GetMapping("/{id}")
     public Jogador getJogadorById(@PathVariable Long id) {
         return jogadorService.findById(id);
+    }
+    
+    @GetMapping("/search")
+    public List<Jogador> getJogadoresByFields(
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String time,
+            @RequestParam(required = false) Integer idade,
+            @RequestParam(required = false) String posicao) {
+        return jogadorService.findByFields(nome, time, idade, posicao);
     }
     
     @GetMapping("/idade/{idade}")

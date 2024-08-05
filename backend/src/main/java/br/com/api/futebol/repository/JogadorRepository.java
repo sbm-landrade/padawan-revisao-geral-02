@@ -194,4 +194,50 @@ public class JogadorRepository {
         }
         return jogadores;
     }
+
+    public List<Jogador> findByFields(String nome, String time, Integer idade, String posicao) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM jogador WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (nome != null && !nome.isEmpty()) {
+            sql.append(" AND nome = ?");
+            params.add(nome);
+        }
+        if (time != null && !time.isEmpty()) {
+            sql.append(" AND time = ?");
+            params.add(time);
+        }
+        if (idade != null) {
+            sql.append(" AND idade = ?");
+            params.add(idade);
+        }
+        if (posicao != null && !posicao.isEmpty()) {
+            sql.append(" AND posicao = ?");
+            params.add(posicao);
+        }
+
+        List<Jogador> jogadores = new ArrayList<>();
+
+        try (PreparedStatement pstm = connection.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                pstm.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    Jogador jogador = new Jogador();
+                    jogador.setId(rs.getLong("id"));
+                    jogador.setNome(rs.getString("nome"));
+                    jogador.setTime(rs.getString("time"));
+                    jogador.setIdade(rs.getInt("idade"));
+                    jogador.setPosicao(rs.getString("posicao"));
+                    jogadores.add(jogador);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return jogadores;
+    }
 }
