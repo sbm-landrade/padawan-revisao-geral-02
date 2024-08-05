@@ -1,3 +1,4 @@
+//Mapeados os endpoints
 package br.com.api.futebol.controller;
 
 import java.util.List;
@@ -31,6 +32,16 @@ public class JogadorController {
     @GetMapping("/{id}")
     public Jogador getJogadorById(@PathVariable Long id) {
         return jogadorService.findById(id);
+    }
+    
+    @GetMapping("/idade/{idade}")
+    public List<Jogador> getJogadoresByIdade(@PathVariable int idade) {
+        return jogadorService.findByIdade(idade);
+    }
+    
+    @GetMapping("/posicao/{posicao}")
+    public List<Jogador> getJogadoresByPosicao(@PathVariable String posicao) {
+    	return jogadorService.findByPosicao(posicao);
     }
 
     @PostMapping
