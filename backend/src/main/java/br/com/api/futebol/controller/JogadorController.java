@@ -39,6 +39,16 @@ public class JogadorController {
         return jogadorService.findByIdade(idade);
     }
     
+    @GetMapping("/nome/{nome}")
+    public List<Jogador> getJogadoresByNome(@PathVariable String nome) {
+        return jogadorService.findByNome(nome);
+    }
+
+    @GetMapping("/time/{time}")
+    public List<Jogador> getJogadoresByTime(@PathVariable String time) {
+        return jogadorService.findByTime(time);
+    }
+    
     @GetMapping("/posicao/{posicao}")
     public List<Jogador> getJogadoresByPosicao(@PathVariable String posicao) {
     	return jogadorService.findByPosicao(posicao);

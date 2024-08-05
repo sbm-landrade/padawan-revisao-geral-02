@@ -146,4 +146,52 @@ public class JogadorRepository {
         }
         return jogadores;
     }
+    
+ // Consulta por nome
+    public List<Jogador> findByNome(String nome) {
+        String sql = "SELECT * FROM jogador WHERE nome = ?";
+        List<Jogador> jogadores = new ArrayList<>();
+
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, nome);
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    Jogador jogador = new Jogador();
+                    jogador.setId(rs.getLong("id"));
+                    jogador.setNome(rs.getString("nome"));
+                    jogador.setTime(rs.getString("time"));
+                    jogador.setIdade(rs.getInt("idade"));
+                    jogador.setPosicao(rs.getString("posicao"));
+                    jogadores.add(jogador);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return jogadores;
+    }
+
+    // Consulta por time
+    public List<Jogador> findByTime(String time) {
+        String sql = "SELECT * FROM jogador WHERE time = ?";
+        List<Jogador> jogadores = new ArrayList<>();
+
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, time);
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    Jogador jogador = new Jogador();
+                    jogador.setId(rs.getLong("id"));
+                    jogador.setNome(rs.getString("nome"));
+                    jogador.setTime(rs.getString("time"));
+                    jogador.setIdade(rs.getInt("idade"));
+                    jogador.setPosicao(rs.getString("posicao"));
+                    jogadores.add(jogador);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return jogadores;
+    }
 }
