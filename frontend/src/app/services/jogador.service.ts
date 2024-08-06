@@ -5,6 +5,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Jogador } from '../models/jogador';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,11 +20,21 @@ export class JogadorService {
   }
 
   getJogadoresByFields(nome: string, time: string, idade?: number, posicao?: string): Observable<Jogador[]> {
-    const params: { [key: string]: string | number } = { nome, time };
-    if (idade !== undefined) params['idade'] = idade;
-    if (posicao) params['posicao'] = posicao;
+    let params = new HttpParams()
+      .set('nome', nome || '')
+      .set('time', time || '');
 
-    return this.http.get<Jogador[]>(this.apiUrl, { params });
+    if (idade !== undefined) {
+      params = params.set('idade', idade.toString());
+    }
+    if (posicao) {
+      params = params.set('posicao', posicao);
+    }
+
+    console.log('Requisição para URL:', `${this.apiUrl}/search`);
+    console.log('Parâmetros:', params.toString());
+
+    return this.http.get<Jogador[]>(`${this.apiUrl}/search`, { params });
   }
 
   createJogador(jogador: Jogador): Observable<Jogador> {

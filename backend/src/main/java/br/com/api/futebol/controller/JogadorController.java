@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,15 +35,16 @@ public class JogadorController {
         return jogadorService.findById(id);
     }
     
-    @GetMapping("/search")
-    public List<Jogador> getJogadoresByFields(
-            @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String time,
-            @RequestParam(required = false) Integer idade,
-            @RequestParam(required = false) String posicao) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public List<Jogador> searchJogadores(
+        @RequestParam(value = "nome", required = false) String nome,
+        @RequestParam(value = "time", required = false) String time,
+        @RequestParam(value = "idade", required = false) Integer idade,
+        @RequestParam(value = "posicao", required = false) String posicao) {
+        
         return jogadorService.findByFields(nome, time, idade, posicao);
     }
-    
+
     @GetMapping("/idade/{idade}")
     public List<Jogador> getJogadoresByIdade(@PathVariable int idade) {
         return jogadorService.findByIdade(idade);

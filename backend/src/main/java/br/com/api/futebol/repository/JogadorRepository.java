@@ -202,20 +202,20 @@ public class JogadorRepository {
         List<Object> params = new ArrayList<>();
 
         if (nome != null && !nome.isEmpty()) {
-            sql.append(" AND nome = ?");
-            params.add(nome);
+            sql.append(" AND nome LIKE ?");
+            params.add("%" + nome + "%");
         }
         if (time != null && !time.isEmpty()) {
-            sql.append(" AND time = ?");
-            params.add(time);
+            sql.append(" AND time LIKE ?");
+            params.add("%" + time + "%");
         }
         if (idade != null) {
             sql.append(" AND idade = ?");
             params.add(idade);
         }
         if (posicao != null && !posicao.isEmpty()) {
-            sql.append(" AND posicao = ?");
-            params.add(posicao);
+            sql.append(" AND posicao LIKE ?");
+            params.add("%" + posicao + "%");
         }
 
         List<Jogador> jogadores = new ArrayList<>();
