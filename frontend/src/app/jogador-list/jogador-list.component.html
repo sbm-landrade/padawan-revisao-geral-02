@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="form-container">
+    <!-- Formulário de Pesquisa -->
+    <div class="search-form">
+      <h2>Filtrar Jogadores</h2>
+      <form (ngSubmit)="searchJogadores()">
+        <input type="text" placeholder="Nome" [(ngModel)]="nome" name="nome">
+        <input type="text" placeholder="Time" [(ngModel)]="time" name="time">
+        <input type="number" placeholder="Idade" [(ngModel)]="idade" name="idade">
+        <input type="text" placeholder="Posição" [(ngModel)]="posicao" name="posicao">
+        <div class="form-buttons">
+          <button type="submit">Buscar</button>
+          <button type="button" (click)="createJogador()">Criar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Formulário de Criação/Atualização -->
+    <div class="edit-form">
+      <h2>{{ isEditing ? 'Editar Jogador' : 'Adicionar Jogador' }}</h2>
+      <form (ngSubmit)="onSubmit()">
+        <input type="text" placeholder="Nome" [(ngModel)]="jogador.nome" name="nome" required>
+        <input type="text" placeholder="Time" [(ngModel)]="jogador.time" name="time" required>
+        <input type="number" placeholder="Idade" [(ngModel)]="jogador.idade" name="idade" required>
+        <input type="text" placeholder="Posição" [(ngModel)]="jogador.posicao" name="posicao" required>
+        <button type="submit" class="submit-button">{{ isEditing ? 'Salvar' : 'Adicionar' }}</button>
+        <button type="button" class="cancel-button" (click)="resetForm()">Cancelar</button>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Lista de Jogadores -->
+  <div *ngIf="jogadores && jogadores.length">
+    <h2>Jogadores Encontrados</h2>
+    <ul>
+      <li *ngFor="let jogador of jogadores">
+        <span>{{ jogador.nome }} - {{ jogador.time }} - {{ jogador.idade }} anos - {{ jogador.posicao }}</span>
+        <div class="actions">
+          <button class="edit" (click)="editJogador(jogador)">Editar</button>
+          <button class="delete" (click)="jogador.id !== undefined && deleteJogador(jogador.id)">Excluir</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!jogadores || jogadores.length === 0" class="no-jogadores">
+    Nenhum jogador encontrado.
+  </div>
+</div>

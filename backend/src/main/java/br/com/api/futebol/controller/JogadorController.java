@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.api.futebol.model.Jogador;
@@ -22,7 +24,6 @@ import br.com.api.futebol.service.JogadorService;
 public class JogadorController {
 	@Autowired
     private JogadorService jogadorService;
-	
 	@CrossOrigin(origins = "http://localhost:4200")
     @GetMapping
     public List<Jogador> getAllJogadores() {
@@ -34,6 +35,16 @@ public class JogadorController {
         return jogadorService.findById(id);
     }
     
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public List<Jogador> searchJogadores(
+        @RequestParam(value = "nome", required = false) String nome,
+        @RequestParam(value = "time", required = false) String time,
+        @RequestParam(value = "idade", required = false) Integer idade,
+        @RequestParam(value = "posicao", required = false) String posicao) {
+        
+        return jogadorService.findByFields(nome, time, idade, posicao);
+    }
+
     @GetMapping("/idade/{idade}")
     public List<Jogador> getJogadoresByIdade(@PathVariable int idade) {
         return jogadorService.findByIdade(idade);

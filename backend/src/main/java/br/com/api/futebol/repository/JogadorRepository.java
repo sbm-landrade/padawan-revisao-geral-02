@@ -80,11 +80,13 @@ public class JogadorRepository {
     }
 //atualiza um registro existente
     public int update(Jogador jogador) {
-        String sql = "UPDATE jogador SET nome = ?, time = ? WHERE id = ?";
+        String sql = "UPDATE jogador SET nome = ?, time = ?, idade = ?, posicao = ? WHERE id = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, jogador.getNome());
             pstm.setString(2, jogador.getTime());
-            pstm.setLong(3, jogador.getId());
+            pstm.setInt(3, jogador.getIdade()); // Adiciona a idade
+            pstm.setString(4, jogador.getPosicao()); // Adiciona a posição
+            pstm.setLong(5, jogador.getId()); // Adiciona o ID do jogador
             return pstm.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -192,6 +194,52 @@ public class JogadorRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return jogadores;
+    }
+
+    public List<Jogador> findByFields(String nome, String time, Integer idade, String posicao) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM jogador WHERE 1=1");
+        List<Object> params = new ArrayList<>();
+
+        if (nome != null && !nome.isEmpty()) {
+            sql.append(" AND nome LIKE ?");
+            params.add("%" + nome + "%");
+        }
+        if (time != null && !time.isEmpty()) {
+            sql.append(" AND time LIKE ?");
+            params.add("%" + time + "%");
+        }
+        if (idade != null) {
+            sql.append(" AND idade = ?");
+            params.add(idade);
+        }
+        if (posicao != null && !posicao.isEmpty()) {
+            sql.append(" AND posicao LIKE ?");
+            params.add("%" + posicao + "%");
+        }
+
+        List<Jogador> jogadores = new ArrayList<>();
+
+        try (PreparedStatement pstm = connection.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                pstm.setObject(i + 1, params.get(i));
+            }
+
+            try (ResultSet rs = pstm.executeQuery()) {
+                while (rs.next()) {
+                    Jogador jogador = new Jogador();
+                    jogador.setId(rs.getLong("id"));
+                    jogador.setNome(rs.getString("nome"));
+                    jogador.setTime(rs.getString("time"));
+                    jogador.setIdade(rs.getInt("idade"));
+                    jogador.setPosicao(rs.getString("posicao"));
+                    jogadores.add(jogador);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return jogadores;
     }
 }
