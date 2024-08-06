@@ -80,11 +80,13 @@ public class JogadorRepository {
     }
 //atualiza um registro existente
     public int update(Jogador jogador) {
-        String sql = "UPDATE jogador SET nome = ?, time = ? WHERE id = ?";
+        String sql = "UPDATE jogador SET nome = ?, time = ?, idade = ?, posicao = ? WHERE id = ?";
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, jogador.getNome());
             pstm.setString(2, jogador.getTime());
-            pstm.setLong(3, jogador.getId());
+            pstm.setInt(3, jogador.getIdade()); // Adiciona a idade
+            pstm.setString(4, jogador.getPosicao()); // Adiciona a posição
+            pstm.setLong(5, jogador.getId()); // Adiciona o ID do jogador
             return pstm.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
