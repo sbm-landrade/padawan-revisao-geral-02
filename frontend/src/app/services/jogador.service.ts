@@ -24,7 +24,7 @@ export class JogadorService {
       .set('nome', nome || '')
       .set('time', time || '');
 
-    if (idade !== undefined) {
+    if (idade !== null && idade !== undefined) {
       params = params.set('idade', idade.toString());
     }
     if (posicao) {
