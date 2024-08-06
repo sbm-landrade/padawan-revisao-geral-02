@@ -79,6 +79,15 @@ ul li button.edit:hover {
   background-color: #e0a800;
 }
 
+ul li button.create {
+  background-color: #008CBA;
+  color: white;
+}
+
+ul li button.create:hover {
+  background-color: #0b779b;
+}
+
 ul li button.delete {
   background-color: #dc3545;
   color: white;

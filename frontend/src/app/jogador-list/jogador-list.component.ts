@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JogadorService } from '../services/jogador.service';
 import { Jogador } from '../models/jogador';
-import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-jogador-list',
   templateUrl: './jogador-list.component.html',
@@ -14,7 +14,10 @@ export class JogadorListComponent implements OnInit {
   idade: number | undefined;
   posicao: string = '';
 
-  constructor(private jogadorService: JogadorService, private http:HttpClient) { }
+  isEditing: boolean = false;
+  jogador: Jogador = new Jogador();
+
+  constructor(private jogadorService: JogadorService) { }
 
   ngOnInit(): void {
     this.loadJogadores();
@@ -31,14 +34,41 @@ export class JogadorListComponent implements OnInit {
       });
     }
     editJogador(jogador: Jogador): void {
-      // Implementar a lógica de edição aqui
-      // Pode abrir um modal ou redirecionar para outra página com o formulário de edição
-      console.log('Editando jogador', jogador);
+      this.isEditing = true;
+      this.jogador = { ...jogador };
     }
-    deleteJogador(id: number) {
-      const url = `http://localhost:8080/api/jogadores/${id}`;
-    this.http.delete(url).subscribe(() => {
-      this.searchJogadores(); // Recarrega a lista após deletar
-    });
+
+    createJogador(): void {
+      this.isEditing = false;
+      this.jogador = new Jogador();
+    }
+
+    onSubmit(): void {
+      console.log('Jogador a ser enviado:', this.jogador);
+      if (this.isEditing) {
+        if (this.jogador.id !== undefined) {
+          this.jogadorService.updateJogador(this.jogador.id, this.jogador).subscribe(() => {
+            this.loadJogadores();
+            this.resetForm();
+          });
+        } else {
+          console.error('O ID do jogador não está definido.');
+        }
+      } else {
+        this.jogadorService.createJogador(this.jogador).subscribe(() => {
+          this.loadJogadores();
+          this.resetForm();
+        });
+      }
+    }
+
+    deleteJogador(id: number): void {
+      this.jogadorService.deleteJogador(id).subscribe(() => {
+        this.searchJogadores();
+      });
+    }
+    resetForm(): void {
+      this.jogador = new Jogador();
+      this.isEditing = false;
     }
 }

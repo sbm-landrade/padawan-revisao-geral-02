@@ -14,12 +14,25 @@
         <span>{{ jogador.nome }} - {{ jogador.time }} - {{ jogador.idade }} anos - {{ jogador.posicao }}</span>
         <div>
           <button class="edit" (click)="editJogador(jogador)">Editar</button>
-          <button class="delete" (click)="deleteJogador(jogador.id)">Excluir</button>
+          <button class="create" (click)="createJogador()">Criar</button>
+          <button class="delete" (click)="jogador.id !== undefined && deleteJogador(jogador.id)">Excluir</button>
         </div>
       </li>
     </ul>
   </div>
   <div *ngIf="!jogadores || jogadores.length === 0" class="no-jogadores">
     Nenhum jogador encontrado.
+  </div>
+
+  <div>
+    <h2>{{ isEditing ? 'Editar Jogador' : 'Adicionar Jogador' }}</h2>
+    <form (ngSubmit)="onSubmit()">
+      <input type="text" placeholder="Nome" [(ngModel)]="jogador.nome" name="nome" required>
+      <input type="text" placeholder="Time" [(ngModel)]="jogador.time" name="time" required>
+      <input type="number" placeholder="Idade" [(ngModel)]="jogador.idade" name="idade" required>
+      <input type="text" placeholder="Posição" [(ngModel)]="jogador.posicao" name="posicao" required>
+      <button type="submit">{{ isEditing ? 'Salvar' : 'Adicionar' }}</button>
+      <button type="button" (click)="resetForm()">Cancelar</button>
+    </form>
   </div>
 </div>

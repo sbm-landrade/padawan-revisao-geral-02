@@ -9,38 +9,31 @@ import { Jogador } from '../models/jogador';
   providedIn: 'root'
 })
 export class JogadorService {
-
   private apiUrl = 'http://localhost:8080/api/jogadores';
 
-  constructor (private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAllJogadores(): Observable<Jogador[]> {
     return this.http.get<Jogador[]>(this.apiUrl);
   }
 
-  getJogadorById(id: number): Observable<Jogador> {
-    return this.http.get<Jogador>(`${this.apiUrl}/${id}`);
+  getJogadoresByFields(nome: string, time: string, idade?: number, posicao?: string): Observable<Jogador[]> {
+    const params: { [key: string]: string | number } = { nome, time };
+    if (idade !== undefined) params['idade'] = idade;
+    if (posicao) params['posicao'] = posicao;
+
+    return this.http.get<Jogador[]>(this.apiUrl, { params });
   }
 
   createJogador(jogador: Jogador): Observable<Jogador> {
     return this.http.post<Jogador>(this.apiUrl, jogador);
   }
 
-  updateJogador(id: number, jogador: Jogador): Observable<Jogador> {
-    return this.http.put<Jogador>(`${this.apiUrl}/${id}`, jogador);
+  updateJogador(id: number, jogador: Jogador): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}`, jogador);
   }
 
   deleteJogador(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
-  getJogadoresByFields(nome?: string, time?: string, idade?: number, posicao?: string): Observable<Jogador[]> {
-    let params = new HttpParams();
-    if (nome) params = params.set('nome', nome);
-    if (time) params = params.set('time', time);
-    if (idade) params = params.set('idade', idade.toString());
-    if (posicao) params = params.set('posicao', posicao);
-    return this.http.get<Jogador[]>(`${this.apiUrl}/search`, { params });
-  }
-
 }
