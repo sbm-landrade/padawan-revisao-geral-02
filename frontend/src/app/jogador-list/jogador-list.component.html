@@ -9,8 +9,8 @@
         <input type="number" placeholder="Idade" [(ngModel)]="idade" name="idade">
         <input type="text" placeholder="Posição" [(ngModel)]="posicao" name="posicao">
         <div class="form-buttons">
-          <button type="submit">Buscar</button>
-          <button type="button" (click)="createJogador()">Criar</button>
+          <button type="submit" class="form-button">Buscar</button>
+          <button type="button" (click)="createJogador()" class="form-button">Criar</button>
         </div>
       </form>
     </div>
@@ -23,8 +23,10 @@
         <input type="text" placeholder="Time" [(ngModel)]="jogador.time" name="time" required>
         <input type="number" placeholder="Idade" [(ngModel)]="jogador.idade" name="idade" required>
         <input type="text" placeholder="Posição" [(ngModel)]="jogador.posicao" name="posicao" required>
-        <button type="submit" class="submit-button">{{ isEditing ? 'Salvar' : 'Adicionar' }}</button>
-        <button type="button" class="cancel-button" (click)="resetForm()">Cancelar</button>
+        <div class="form-buttons">
+          <button type="submit" class="form-button">{{ isEditing ? 'Salvar' : 'Adicionar' }}</button>
+          <button type="button" class="form-button cancel-button" (click)="resetForm()">Cancelar</button>
+        </div>
       </form>
     </div>
 
